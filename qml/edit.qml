@@ -15,7 +15,7 @@ VpnPlatformEditDialog {
         when: root.newConnection && root.importPath
         target: root
         property: 'subtitle'
-        value: "Settings imported successfully."
+        value: getProviderProperty('Error') ? "Error importing settings: " + getProviderProperty('Error') : "Settings imported successfully."
     }
 
     vpnType: "wireguard"
