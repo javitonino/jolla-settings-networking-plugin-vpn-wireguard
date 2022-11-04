@@ -16,4 +16,4 @@ def parse_file(filename):
     }
 
 if __name__ == '__main__':
-    print(parsefilesys.argv[1])
+    print(parse_file(sys.argv[1]))
