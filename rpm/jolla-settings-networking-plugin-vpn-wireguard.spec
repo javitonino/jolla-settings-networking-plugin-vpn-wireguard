@@ -1,6 +1,6 @@
 Name:       jolla-settings-networking-plugin-vpn-wireguard
 Summary:    Settings plugin for Wireguard VPN
-Version:    0.2
+Version:    0.3
 Release:    1
 License:    GPLv3
 BuildArch:  noarch
@@ -24,6 +24,9 @@ install importer/import_wg.py %{buildroot}%{_datarootdir}/sailfish-vpn/wireguard
 %{_datarootdir}/sailfish-vpn/wireguard/import_wg.py
 
 %changelog
+* Mon Nov 7 2022 javitonino <> - 0.3-1
+- Correctly import files with multiple DNS servers
+
 * Fri Nov 4 2022 javitonino <> - 0.2-1
 - Do not crash when importing wg-quick.conf files without optional fields
 - Display import errors on the settings UI

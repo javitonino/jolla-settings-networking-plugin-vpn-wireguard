@@ -51,5 +51,12 @@ class TestImporter(unittest.TestCase):
             {'Error': "Some required parameters were missing: 'PrivateKey'"}
         )
 
+
+    def test_complete(self):
+        self.assertEqual(
+            parse_file(FIXTURES_PATH + 'multidns.conf'),
+            { **EXPECTED, 'WireGuard.Interface.DNS': '10.40.0.27 1.2.3.4' }
+        )
+
 if __name__ == '__main__':
     unittest.main()

@@ -19,7 +19,7 @@ Column {
 
     ConfigTextField {
         id: dns
-        label: "DNS Server"
+        label: "DNS Servers (separated by space)"
     }
 
     ConfigIntField {

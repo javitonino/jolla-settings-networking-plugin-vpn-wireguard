@@ -15,7 +15,7 @@ def parse_file(filename):
         }
 
         if 'DNS' in parser['Interface']:
-            config['WireGuard.Interface.DNS'] = parser['Interface']['DNS']
+            config['WireGuard.Interface.DNS'] = ' '.join([s.strip() for s in parser['Interface']['DNS'].split(',')])
 
         if 'PersistentKeepalive' in parser['Peer']:
             config['WireGuard.Peer.PersistentKeepalive'] = parser['Peer']['PersistentKeepalive']
