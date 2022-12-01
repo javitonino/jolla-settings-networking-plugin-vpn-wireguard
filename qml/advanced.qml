@@ -8,11 +8,13 @@ Column {
     function setProperties(providerProperties) {
         dns.text = getProperty('WireGuard.Interface.DNS')
         keepAlive.text = getProperty('WireGuard.Peer.PersistentKeepalive')
+        psk.text = getProperty('WireGuard.Peer.PresharedKey')
     }
 
     function updateProperties(providerProperties) {
         updateProvider('WireGuard.Interface.DNS', dns.text)
         updateProvider('WireGuard.Peer.PersistentKeepalive', keepAlive.filteredText)
+        updateProvider('WireGuard.Peer.PresharedKey', psk.text)
     }
 
     width: parent.width
@@ -27,5 +29,10 @@ Column {
         label: "Persistent Keep-Alive Interval (seconds)"
         intLowerLimit: 0
         intUpperLimit: 100000
+    }
+
+    ConfigTextField {
+        id: psk
+        label: "Preshared Key"
     }
 }

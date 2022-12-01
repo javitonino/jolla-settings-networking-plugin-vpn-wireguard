@@ -4,59 +4,59 @@ import io
 from os.path import dirname
 
 
-FIXTURES_PATH = f'{dirname(__file__)}/fixtures/'
+FIXTURES_PATH = f"{dirname(__file__)}/fixtures/"
 EXPECTED = {
-    'Host': 'example.org:31416',
-    'WireGuard.Peer.PublicKey': 'VXoHMVlNwusPXTgL6m5l/uuywfDOUTmPZx5rMgLLU1U=',
-    'WireGuard.Peer.AllowedIPs': '10.0.0.0/22',
-    'WireGuard.Interface.Address': '10.0.0.42/24',
-    'WireGuard.Interface.PrivateKey': 'AJPmo1Rj0UKt6FSwTOnd8t4/t/5mP2UmR/1dFtDpQm8=',
-    'WireGuard.Interface.DNS': '10.40.0.27',
-    'WireGuard.Peer.PersistentKeepalive': '25'
+    "Host": "example.org:31416",
+    "WireGuard.Peer.PublicKey": "VXoHMVlNwusPXTgL6m5l/uuywfDOUTmPZx5rMgLLU1U=",
+    "WireGuard.Peer.AllowedIPs": "10.0.0.0/22",
+    "WireGuard.Interface.Address": "10.0.0.42/24",
+    "WireGuard.Interface.PrivateKey": "AJPmo1Rj0UKt6FSwTOnd8t4/t/5mP2UmR/1dFtDpQm8=",
+    "WireGuard.Interface.DNS": "10.40.0.27",
+    "WireGuard.Peer.PersistentKeepalive": "25",
+    "WireGuard.Peer.PresharedKey": "yA8UgARbped6pZLaePCkTsWXRTi66GhrI/8pq5M9b6o=",
 }
 
 
 class TestImporter(unittest.TestCase):
     def test_complete(self):
-        self.assertEqual(
-            parse_file(FIXTURES_PATH + 'complete.conf'),
-            EXPECTED
-        )
-
+        self.assertEqual(parse_file(FIXTURES_PATH + "complete.conf"), EXPECTED)
 
     def test_minimum(self):
         self.assertEqual(
-            parse_file(FIXTURES_PATH + 'minimum.conf'),
-            {k:v for k,v in EXPECTED.items() if k not in ['WireGuard.Interface.DNS', 'WireGuard.Peer.PersistentKeepalive']}
+            parse_file(FIXTURES_PATH + "minimum.conf"),
+            {
+                k: v
+                for k, v in EXPECTED.items()
+                if k
+                not in [
+                    "WireGuard.Interface.DNS",
+                    "WireGuard.Peer.PersistentKeepalive",
+                    "WireGuard.Peer.PresharedKey",
+                ]
+            },
         )
-
 
     def test_whitespace(self):
-        self.assertEqual(
-            parse_file(FIXTURES_PATH + 'whitespace.conf'),
-            EXPECTED
-        )
-
+        self.assertEqual(parse_file(FIXTURES_PATH + "whitespace.conf"), EXPECTED)
 
     def test_file_not_exists_error(self):
         self.assertEqual(
-            parse_file(FIXTURES_PATH + 'not_exists.conf'),
-            {'Error': "Some required parameters were missing: 'Peer'"}
+            parse_file(FIXTURES_PATH + "not_exists.conf"),
+            {"Error": "Some required parameters were missing: 'Peer'"},
         )
-
 
     def test_incomplete_error(self):
         self.assertEqual(
-            parse_file(FIXTURES_PATH + 'incomplete.conf'),
-            {'Error': "Some required parameters were missing: 'PrivateKey'"}
+            parse_file(FIXTURES_PATH + "incomplete.conf"),
+            {"Error": "Some required parameters were missing: 'PrivateKey'"},
         )
 
-
-    def test_complete(self):
+    def test_multidns(self):
         self.assertEqual(
-            parse_file(FIXTURES_PATH + 'multidns.conf'),
-            { **EXPECTED, 'WireGuard.Interface.DNS': '10.40.0.27 1.2.3.4' }
+            parse_file(FIXTURES_PATH + "multidns.conf"),
+            {**EXPECTED, "WireGuard.Interface.DNS": "10.40.0.27 1.2.3.4"},
         )
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
